@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import SettingsIcon from "@mui/icons-material/Settings";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import SettingsDrawer from "./SettingsDrawer";
 
-const Navigation = () => {
+const Navigation = ({ authUser, onSignOut }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -22,6 +22,28 @@ const Navigation = () => {
       return;
     }
     setDrawerOpen(open);
+  };
+
+  const navigationMenus = [
+    {
+      id: 1,
+      label: "Home",
+      href: "/",
+    },
+    {
+      id: 2,
+      label: "Leaderboard",
+      href: "/leaderboard",
+    },
+    {
+      id: 3,
+      label: authUser ? "Logout" : "Login",
+      href: authUser ? "/" : "/login",
+    },
+  ];
+
+  const onLogout = () => {
+    if (authUser) onSignOut();
   };
 
   return (
@@ -65,18 +87,31 @@ const Navigation = () => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-            <Button color="primary" variant="text" component={Link} to="/">
-              Home
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              disableElevation
-              component={Link}
-              to="/login"
-            >
-              Login
-            </Button>
+            {navigationMenus.map((menu) =>
+              menu.id !== 3 ? (
+                <Button
+                  key={menu.id}
+                  color="primary"
+                  variant="text"
+                  component={Link}
+                  to={menu.href}
+                >
+                  {menu.label}
+                </Button>
+              ) : (
+                <Button
+                  key={menu.id}
+                  color="primary"
+                  variant="contained"
+                  disableElevation
+                  component={Link}
+                  to={menu.href}
+                  onClick={onLogout}
+                >
+                  {menu.label}
+                </Button>
+              )
+            )}
             <IconButton onClick={toggleDrawer(true)} color="primary">
               <SettingsIcon />
             </IconButton>

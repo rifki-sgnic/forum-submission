@@ -10,7 +10,7 @@ import CardContent from "@mui/material/CardContent";
 import { detailThread } from "../utils/mockData";
 import { formatDate } from "../utils/format";
 
-const DetailPage = () => {
+function DetailPage() {
   // const { id } = useParams(); // ID will be used for fetching in real app
 
   // In a real app, we would dispatch an action to fetch the thread detail by ID.
@@ -90,6 +90,6 @@ const DetailPage = () => {
       </Box>
     </Container>
   );
-};
+}
 
 export default DetailPage;

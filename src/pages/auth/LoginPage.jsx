@@ -6,21 +6,24 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
-import { asyncSetAuthUser } from "../../states/authUser/reducer";
+import { asyncSetAuthUser } from "../../states/authUser/action";
 
-const LoginPage = () => {
+function LoginPage() {
   const initialValues = {
     email: "",
     password: "",
   };
   const { values, handleChange } = useForm(initialValues);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onLogin = (event) => {
     event.preventDefault();
     dispatch(asyncSetAuthUser(values));
+
+    navigate("/");
   };
 
   return (
@@ -101,6 +104,6 @@ const LoginPage = () => {
       </Card>
     </Container>
   );
-};
+}
 
 export default LoginPage;

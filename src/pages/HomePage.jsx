@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { receiveThreadsActionCreator } from "../states/threads/action";
-import ThreadItem from "../components/ThreadItem";
 import { mockThreads } from "../utils/mockData";
+import ThreadList from "../components/ThreadList";
 
-const HomePage = () => {
+function HomePage() {
   const dispatch = useDispatch();
   const threads = useSelector((state) => state.threads);
 
@@ -35,13 +35,9 @@ const HomePage = () => {
         </Button>
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-        {threads.map((thread) => (
-          <ThreadItem key={thread.id} thread={thread} />
-        ))}
-      </Box>
+      <ThreadList threads={threads} />
     </Container>
   );
-};
+}
 
 export default HomePage;

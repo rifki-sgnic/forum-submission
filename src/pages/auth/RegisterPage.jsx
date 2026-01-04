@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import { asyncRegisterUser } from "../../states/users/action";
 
-const RegisterPage = () => {
+function RegisterPage() {
   const initialValues = {
     name: "",
     email: "",
@@ -121,6 +121,6 @@ const RegisterPage = () => {
       </Card>
     </Container>
   );
-};
+}
 
 export default RegisterPage;

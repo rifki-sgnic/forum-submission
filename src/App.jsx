@@ -1,15 +1,23 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import HomePage from "./pages/HomePage";
 import DetailPage from "./pages/DetailPage";
+import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
+import { asyncUnsetAuthUser } from "./states/authUser/action";
 
 function App() {
+  const { authUser = null } = useSelector((states) => states);
+  const dispatch = useDispatch();
+
+  const onSignOut = () => {
+    dispatch(asyncUnsetAuthUser());
+  };
+
   return (
     <>
-      <Navigation />
+      <Navigation authUser={authUser} onSignOut={onSignOut} />
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
