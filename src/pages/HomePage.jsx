@@ -19,6 +19,7 @@ function HomePage() {
   const theme = useTheme();
   const users = useSelector((state) => state.users);
   const threads = useSelector((state) => state.threads);
+  const authUser = useSelector((state) => state.authUser);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("hot");
 
@@ -29,6 +30,7 @@ function HomePage() {
   const threadList = threads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
+    authUser: authUser?.id,
   }));
 
   const categories = [

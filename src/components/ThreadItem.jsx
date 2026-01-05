@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { alpha, useTheme } from "@mui/material/styles";
+import parse from "html-react-parser";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -184,6 +185,7 @@ function ThreadItem({ thread }) {
           />
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
             <Avatar
+              src={user?.avatar}
               sx={{
                 width: 20,
                 height: 20,
@@ -227,20 +229,22 @@ function ThreadItem({ thread }) {
           {title}
         </Typography>
 
-        {/* Body Preview */}
+        {/* Body */}
         <Typography
-          variant="body2"
+          component="div"
+          variant="body1"
+          color="text.secondary"
           sx={{
             display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
             overflow: "hidden",
-            color: "text.secondary",
-            lineHeight: 1.6,
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 3,
             mb: 2,
+            "& div": { margin: 0 },
+            "& p": { margin: 0 },
           }}
         >
-          {body}
+          {parse(body)}
         </Typography>
 
         {/* Actions */}

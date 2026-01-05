@@ -1,5 +1,5 @@
-import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { alpha } from "@mui/material/styles";
+import parse from "html-react-parser";
 import PropTypes from "prop-types";
 import { getTimeAgo } from "../utils/format";
 
@@ -79,7 +80,7 @@ function CommentItem({ comment }) {
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-              {comment.content}
+              {parse(comment.content)}
             </Typography>
 
             {/* Comment Actions */}

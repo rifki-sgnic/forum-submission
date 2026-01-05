@@ -1,36 +1,70 @@
-import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
+import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
-import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import { alpha, useTheme } from "@mui/material/styles";
+import parse from "html-react-parser";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { getTimeAgo } from "../utils/format";
+import {
+  asyncToggleDownVoteThreadDetail,
+  asyncToggleNeutralVoteThreadDetail,
+  asyncToggleUpVoteThreadDetail,
+} from "../states/threadDetail/action";
 
-function ThreadDetail({ thread, authUser }) {
+function ThreadDetail({
+  id,
+  title,
+  body,
+  category,
+  createdAt,
+  owner,
+  comments,
+  upVotesBy = [],
+  downVotesBy = [],
+  authUser,
+}) {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
-  const {
-    title,
-    body,
-    category,
-    createdAt,
-    owner,
-    comments,
-    upVotesBy = [],
-    downVotesBy = [],
-  } = thread;
+  function handleUpVote(e) {
+    e.stopPropagation();
+    if (!authUser) {
+      navigate("/login");
+      return;
+    }
+    if (isUpVoted) {
+      dispatch(asyncToggleNeutralVoteThreadDetail(id));
+    } else {
+      dispatch(asyncToggleUpVoteThreadDetail(id));
+    }
+  }
 
-  const voteScore = upVotesBy.length - downVotesBy.length;
+  function handleDownVote(e) {
+    e.stopPropagation();
+    if (!authUser) {
+      navigate("/login");
+      return;
+    }
+    if (isDownVoted) {
+      dispatch(asyncToggleNeutralVoteThreadDetail(id));
+    } else {
+      dispatch(asyncToggleDownVoteThreadDetail(id));
+    }
+  }
+
   const isUpVoted = authUser && upVotesBy.includes(authUser?.id);
   const isDownVoted = authUser && downVotesBy.includes(authUser?.id);
+  const voteScore = upVotesBy.length - downVotesBy.length;
 
   return (
     <Card sx={{ overflow: "visible" }}>
@@ -50,6 +84,7 @@ function ThreadDetail({ thread, authUser }) {
           <Tooltip title="Upvote" placement="left">
             <IconButton
               size="small"
+              onClick={handleUpVote}
               sx={{
                 color: isUpVoted ? "#f97316" : "text.secondary",
                 bgcolor: isUpVoted ? alpha("#f97316", 0.1) : "transparent",
@@ -81,6 +116,7 @@ function ThreadDetail({ thread, authUser }) {
           <Tooltip title="Downvote" placement="left">
             <IconButton
               size="small"
+              onClick={handleDownVote}
               sx={{
                 color: isDownVoted ? "#8b5cf6" : "text.secondary",
                 bgcolor: isDownVoted ? alpha("#8b5cf6", 0.1) : "transparent",
@@ -116,18 +152,18 @@ function ThreadDetail({ thread, authUser }) {
             />
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Avatar
-                src={owner.avatar}
-                alt={owner.name}
+                src={owner?.avatar}
+                alt={owner?.name}
                 sx={{ width: 28, height: 28, bgcolor: "primary.main" }}
               >
-                {owner.name?.charAt(0)?.toUpperCase()}
+                {owner?.name?.charAt(0)?.toUpperCase()}
               </Avatar>
               <Typography variant="body2" color="text.secondary">
                 <Box
                   component="span"
                   sx={{ color: "text.primary", fontWeight: 600 }}
                 >
-                  {owner.name}
+                  {owner?.name}
                 </Box>
                 {" • "}
                 {getTimeAgo(createdAt)}
@@ -146,15 +182,18 @@ function ThreadDetail({ thread, authUser }) {
 
           {/* Body */}
           <Typography
+            component="div"
             variant="body1"
             sx={{
               whiteSpace: "pre-line",
               lineHeight: 1.8,
               color: "text.secondary",
               mb: 3,
+              "& div": { margin: 0 },
+              "& p": { margin: 0 },
             }}
           >
-            {body}
+            {parse(body)}
           </Typography>
 
           {/* Actions */}

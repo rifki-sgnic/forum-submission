@@ -6,14 +6,25 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import { asyncUnsetAuthUser } from "./states/authUser/action";
 import LoginPage from "./pages/auth/LoginPage";
+import { useEffect } from "react";
+import { asyncPreloadProcess } from "./states/isPreload/action";
 
 function App() {
   const authUser = useSelector((state) => state.authUser);
+  const isPreload = useSelector((state) => state.isPreload);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
 
   const onSignOut = () => {
     dispatch(asyncUnsetAuthUser());
   };
+
+  if (isPreload) {
+    return null;
+  }
 
   return (
     <>

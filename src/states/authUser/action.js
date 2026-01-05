@@ -36,8 +36,8 @@ function asyncSetAuthUser({ email, password }) {
       const { token } = response.data;
       localStorage.setItem("accessToken", token);
 
-      const getOwnProfileResponse = await api.get("/users/me", token);
-      const authUser = getOwnProfileResponse.data.user;
+      const authUserResponse = await api.get("/users/me", token);
+      const authUser = authUserResponse.data.user;
       dispatch(setAuthUserActionCreator(authUser));
     } catch (error) {
       alert(error.message);
