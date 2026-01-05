@@ -9,6 +9,11 @@ const store = configureStore({
     users: usersReducer,
     authUser: authUserReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: { warnAfter: 128 },
+      serializableCheck: false,
+    }),
 });
 
 export default store;

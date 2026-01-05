@@ -3,12 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import DetailPage from "./pages/DetailPage";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import { asyncUnsetAuthUser } from "./states/authUser/action";
+import LoginPage from "./pages/auth/LoginPage";
 
 function App() {
-  const { authUser = null } = useSelector((states) => states);
+  const authUser = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
 
   const onSignOut = () => {

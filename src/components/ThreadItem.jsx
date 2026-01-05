@@ -1,20 +1,32 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
+import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { alpha, useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
-import { formatDate } from "../utils/format";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  asyncToggleDownVoteThread,
+  asyncToggleNeutralVoteThread,
+  asyncToggleUpVoteThread,
+} from "../states/threads/action";
+import { getTimeAgo } from "../utils/format";
 
-const ThreadItem = ({ thread }) => {
+function ThreadItem({ thread }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const authUser = useSelector((state) => state.authUser);
+
   const {
     id,
     title,
@@ -22,39 +34,179 @@ const ThreadItem = ({ thread }) => {
     category,
     createdAt,
     ownerId,
-    upVotesBy,
+    user,
+    upVotesBy = [],
+    downVotesBy = [],
     totalComments,
   } = thread;
 
-  const onThreadClick = () => {
-    navigate(`/threads/${id}`);
-  };
+  const isUpVoted = authUser && upVotesBy.includes(authUser.id);
+  const isDownVoted = authUser && downVotesBy.includes(authUser.id);
+  const voteScore = upVotesBy.length - downVotesBy.length;
 
-  const onThreadPress = (event) => {
+  function onThreadClick() {
+    navigate(`/threads/${id}`);
+  }
+
+  function onThreadPress(event) {
     if (event.key === "Enter" || event.key === " ") {
       navigate(`/threads/${id}`);
     }
-  };
+  }
+
+  function handleUpVote(e) {
+    e.stopPropagation();
+    if (!authUser) {
+      navigate("/login");
+      return;
+    }
+    if (isUpVoted) {
+      dispatch(asyncToggleNeutralVoteThread(id));
+    } else {
+      dispatch(asyncToggleUpVoteThread(id));
+    }
+  }
+
+  function handleDownVote(e) {
+    e.stopPropagation();
+    if (!authUser) {
+      navigate("/login");
+      return;
+    }
+    if (isDownVoted) {
+      dispatch(asyncToggleNeutralVoteThread(id));
+    } else {
+      dispatch(asyncToggleDownVoteThread(id));
+    }
+  }
 
   return (
-    <Card variant="outlined" sx={{ overflow: "visible" }}>
-      <CardContent sx={{ pb: 1 }}>
-        <Box sx={{ display: "flex", gap: 1, mb: 2, alignItems: "center" }}>
+    <Card
+      sx={{
+        display: "flex",
+        overflow: "visible",
+        cursor: "pointer",
+        "&:hover": {
+          borderColor: alpha(theme.palette.primary.main, 0.3),
+        },
+      }}
+      onClick={onThreadClick}
+    >
+      {/* Voting Sidebar */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          p: 1.5,
+          pt: 2,
+          bgcolor: alpha(theme.palette.text.primary, 0.02),
+          borderRadius: "12px 0 0 12px",
+          minWidth: 52,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Tooltip title="Upvote" placement="left">
+          <IconButton
+            size="small"
+            onClick={handleUpVote}
+            sx={{
+              color: isUpVoted ? "#f97316" : "text.secondary",
+              bgcolor: isUpVoted ? alpha("#f97316", 0.1) : "transparent",
+              "&:hover": {
+                color: "#f97316",
+                bgcolor: alpha("#f97316", 0.1),
+              },
+            }}
+          >
+            <ArrowUpwardRoundedIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Typography
+          variant="body2"
+          sx={{
+            fontWeight: 700,
+            py: 0.5,
+            color: isUpVoted
+              ? "#f97316"
+              : isDownVoted
+              ? "#8b5cf6"
+              : "text.primary",
+          }}
+        >
+          {voteScore}
+        </Typography>
+
+        <Tooltip title="Downvote" placement="left">
+          <IconButton
+            size="small"
+            onClick={handleDownVote}
+            sx={{
+              color: isDownVoted ? "#8b5cf6" : "text.secondary",
+              bgcolor: isDownVoted ? alpha("#8b5cf6", 0.1) : "transparent",
+              "&:hover": {
+                color: "#8b5cf6",
+                bgcolor: alpha("#8b5cf6", 0.1),
+              },
+            }}
+          >
+            <ArrowDownwardRoundedIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      </Box>
+
+      {/* Main Content */}
+      <Box sx={{ flex: 1, p: 2, pl: 2 }}>
+        {/* Header */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            mb: 1.5,
+            flexWrap: "wrap",
+          }}
+        >
           <Chip
             label={`#${category}`}
             size="small"
             color="primary"
             variant="outlined"
-            onClick={(e) => {
-              e.stopPropagation();
+            sx={{
+              borderRadius: 2,
+              fontWeight: 600,
+              fontSize: "0.7rem",
+              height: 24,
             }}
-            sx={{ borderRadius: 1, fontWeight: 600 }}
+            onClick={(e) => e.stopPropagation()}
           />
-          <Typography variant="caption" color="text.secondary">
-            • Posted by {ownerId} • {formatDate(createdAt)}
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+            <Avatar
+              sx={{
+                width: 20,
+                height: 20,
+                fontSize: "0.7rem",
+                bgcolor: "primary.main",
+              }}
+            >
+              {user?.name.charAt(0)?.toUpperCase() || "U"}
+            </Avatar>
+            <Typography variant="caption" color="text.secondary">
+              <Box
+                component="span"
+                sx={{ color: "text.primary", fontWeight: 600 }}
+              >
+                {user?.name}
+              </Box>
+              {" • "}
+              {getTimeAgo(createdAt)}
+            </Typography>
+          </Box>
         </Box>
 
+        {/* Title */}
         <Typography
           variant="h6"
           component="div"
@@ -62,9 +214,12 @@ const ThreadItem = ({ thread }) => {
           role="button"
           sx={{
             mb: 1,
-            lineHeight: 1.3,
-            cursor: "pointer",
-            "&:hover": { textDecoration: "underline" },
+            lineHeight: 1.35,
+            fontWeight: 600,
+            fontSize: "1.1rem",
+            "&:hover": {
+              color: "primary.main",
+            },
           }}
           onClick={onThreadClick}
           onKeyDown={onThreadPress}
@@ -72,49 +227,112 @@ const ThreadItem = ({ thread }) => {
           {title}
         </Typography>
 
+        {/* Body Preview */}
         <Typography
           variant="body2"
-          color="text.secondary"
           sx={{
             display: "-webkit-box",
-            WebkitLineClamp: 3,
+            WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
             overflow: "hidden",
+            color: "text.secondary",
+            lineHeight: 1.6,
             mb: 2,
           }}
         >
           {body}
         </Typography>
-      </CardContent>
 
-      <CardActions sx={{ px: 2, pb: 2, pt: 0 }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mr: 2 }}>
-          <IconButton size="small" color="inherit">
-            <ThumbUpOutlinedIcon fontSize="small" />
-          </IconButton>
-          <Typography variant="body2" fontWeight="bold">
-            {upVotesBy.length}
-          </Typography>
+        {/* Actions */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0.5,
+              px: 1.5,
+              py: 0.75,
+              borderRadius: 2,
+              bgcolor: alpha(theme.palette.text.primary, 0.05),
+              cursor: "pointer",
+              "&:hover": {
+                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                color: "primary.main",
+              },
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onThreadClick();
+            }}
+          >
+            <ChatBubbleOutlineRoundedIcon sx={{ fontSize: 18 }} />
+            <Typography variant="caption" fontWeight={600}>
+              {totalComments} {totalComments === 1 ? "comment" : "comments"}
+            </Typography>
+          </Box>
+
+          <Tooltip title="Share">
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                px: 1.5,
+                py: 0.75,
+                borderRadius: 2,
+                bgcolor: alpha(theme.palette.text.primary, 0.05),
+                cursor: "pointer",
+                "&:hover": {
+                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                  color: "primary.main",
+                },
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ShareRoundedIcon sx={{ fontSize: 18 }} />
+              <Typography
+                variant="caption"
+                fontWeight={600}
+                sx={{ display: { xs: "none", sm: "block" } }}
+              >
+                Share
+              </Typography>
+            </Box>
+          </Tooltip>
+
+          <Tooltip title="Save">
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                px: 1.5,
+                py: 0.75,
+                borderRadius: 2,
+                bgcolor: alpha(theme.palette.text.primary, 0.05),
+                cursor: "pointer",
+                "&:hover": {
+                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                  color: "primary.main",
+                },
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <BookmarkBorderRoundedIcon sx={{ fontSize: 18 }} />
+              <Typography
+                variant="caption"
+                fontWeight={600}
+                sx={{ display: { xs: "none", sm: "block" } }}
+              >
+                Save
+              </Typography>
+            </Box>
+          </Tooltip>
         </Box>
-
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mr: 2 }}>
-          <IconButton size="small" color="inherit">
-            <ChatBubbleOutlineIcon fontSize="small" />
-          </IconButton>
-          <Typography variant="body2" fontWeight="bold">
-            {totalComments}
-          </Typography>
-        </Box>
-
-        <Box sx={{ flexGrow: 1 }} />
-
-        <IconButton size="small" color="inherit">
-          <ShareOutlinedIcon fontSize="small" />
-        </IconButton>
-      </CardActions>
+      </Box>
     </Card>
   );
-};
+}
 
 ThreadItem.propTypes = {
   thread: PropTypes.shape({
