@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import AddThreadPage from './pages/AddThreadPage';
+import DetailPage from './pages/DetailPage';
+import HomePage from './pages/HomePage';
+import LeaderboardPage from './pages/LeaderboardPage';
+import NotFoundPage from './pages/NotFoundPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import { asyncUnsetAuthUser } from './states/authUser/action';
+import { asyncPreloadProcess } from './states/isPreload/action';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const authUser = useSelector((state) => state.authUser);
+  const isPreload = useSelector((state) => state.isPreload);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
+
+  const onSignOut = () => {
+    dispatch(asyncUnsetAuthUser());
+  };
+
+  if (isPreload) {
+    return null;
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Navigation authUser={authUser} onSignOut={onSignOut} />
+      <main>
+        <Routes>
+          <Route
+            path="/login"
+            element={authUser ? <Navigate to="/" /> : <LoginPage />}
+          />
+          <Route
+            path="/register"
+            element={authUser ? <Navigate to="/" /> : <RegisterPage />}
+          />
+          <Route
+            path="/new"
+            element={authUser ? <AddThreadPage /> : <Navigate to="/login" />}
+          />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/threads/:id" element={<DetailPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
