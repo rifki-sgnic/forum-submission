@@ -64,7 +64,7 @@ function AddThreadPage() {
           <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <TextField
               label="Title"
-              id="title"
+              name="title"
               value={values.title}
               onChange={handleChange}
               placeholder="Give your thread a clear title"
@@ -80,7 +80,7 @@ function AddThreadPage() {
 
             <TextField
               label="Category"
-              id="category"
+              name="category"
               value={values.category}
               onChange={handleChange}
               placeholder="e.g., technology, general, introduction"
@@ -96,7 +96,7 @@ function AddThreadPage() {
 
             <TextField
               label="Content"
-              id="body"
+              name="body"
               value={values.body}
               onChange={handleChange}
               placeholder="What's on your mind? (HTML supported)"
