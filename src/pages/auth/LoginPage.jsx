@@ -30,6 +30,7 @@ function LoginPage() {
   function onLogin(event) {
     event.preventDefault();
     dispatch(asyncSetAuthUser(values));
+
     navigate("/");
   }
 

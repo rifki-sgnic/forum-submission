@@ -1,4 +1,5 @@
 import api from "../../utils/api";
+import { setNotifActionCreator } from "../notification/action";
 
 const ActionType = {
   RECEIVE_USERS: "RECEIVE_USERS",
@@ -23,9 +24,13 @@ function asyncRegisterUser({ email, password, name }) {
           name,
         }),
       });
-      console.log(response);
     } catch (error) {
-      alert(error.message);
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: error.message,
+        })
+      );
     }
   };
 }

@@ -8,14 +8,14 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Fab from "@mui/material/Fab";
 import IconButton from "@mui/material/IconButton";
+import { alpha, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme, alpha } from "@mui/material/styles";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import SettingsDrawer from "./SettingsDrawer";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import MobileDrawer from "./MobileDrawer";
+import SettingsDrawer from "./SettingsDrawer";
 
 function Navigation({ authUser, onSignOut }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -23,6 +23,7 @@ function Navigation({ authUser, onSignOut }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
+  const navigate = useNavigate();
 
   function toggleSettingsDrawer(open) {
     return function (event) {
@@ -155,6 +156,7 @@ function Navigation({ authUser, onSignOut }) {
                   variant="contained"
                   startIcon={<AddIcon />}
                   sx={{ borderRadius: 2 }}
+                  onClick={() => navigate("/new")}
                 >
                   New Thread
                 </Button>
@@ -194,9 +196,10 @@ function Navigation({ authUser, onSignOut }) {
         </Container>
       </AppBar>
 
-      {authUser && isMobile && (
+      {authUser && isMobile && location.pathname !== "/new" && (
         <Fab
           color="primary"
+          onClick={() => navigate("/new")}
           sx={{
             position: "fixed",
             bottom: 24,

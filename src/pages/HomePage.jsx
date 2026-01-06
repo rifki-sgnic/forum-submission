@@ -9,9 +9,11 @@ import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import { alpha, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import Skeleton from "@mui/material/Skeleton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ThreadList from "../components/ThreadList";
+import ThreadSkeleton from "../components/ThreadSkeleton";
 import { asyncPopulateUsersAndThreads } from "../states/shared/action";
 
 function HomePage() {
@@ -20,6 +22,7 @@ function HomePage() {
   const users = useSelector((state) => state.users);
   const threads = useSelector((state) => state.threads);
   const authUser = useSelector((state) => state.authUser);
+  const isLoading = useSelector((state) => state.loading > 0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("hot");
 
@@ -142,26 +145,46 @@ function HomePage() {
                   },
                 }}
               >
-                {categories.map((cat) => (
-                  <Chip
-                    key={cat}
-                    label={cat === "all" ? "All Topics" : `#${cat}`}
-                    onClick={() => setSelectedCategory(cat)}
-                    variant={selectedCategory === cat ? "filled" : "outlined"}
-                    color={selectedCategory === cat ? "primary" : "default"}
-                    sx={{
-                      borderRadius: 2,
-                      fontWeight: 600,
-                      textTransform: "capitalize",
-                      flexShrink: 0,
-                    }}
-                  />
-                ))}
+                {isLoading
+                  ? [1, 2, 3, 4].map((i) => (
+                      <Skeleton
+                        key={i}
+                        variant="rounded"
+                        width={80}
+                        height={32}
+                        sx={{ borderRadius: 2, flexShrink: 0 }}
+                      />
+                    ))
+                  : categories.map((cat) => (
+                      <Chip
+                        key={cat}
+                        label={cat === "all" ? "All Topics" : `#${cat}`}
+                        onClick={() => setSelectedCategory(cat)}
+                        variant={
+                          selectedCategory === cat ? "filled" : "outlined"
+                        }
+                        color={selectedCategory === cat ? "primary" : "default"}
+                        sx={{
+                          borderRadius: 2,
+                          fontWeight: 600,
+                          textTransform: "capitalize",
+                          flexShrink: 0,
+                        }}
+                      />
+                    ))}
               </Box>
             </Card>
 
             {/* Thread List */}
-            <ThreadList threads={sortedThreads} />
+            {isLoading ? (
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                {[1, 2, 3, 4].map((i) => (
+                  <ThreadSkeleton key={i} />
+                ))}
+              </Box>
+            ) : (
+              <ThreadList threads={sortedThreads} />
+            )}
           </Box>
 
           {/* Sidebar */}
@@ -185,47 +208,54 @@ function HomePage() {
                   mt: 2,
                 }}
               >
-                {categories.slice(1, 6).map((cat, index) => (
-                  <Box
-                    key={cat}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1.5,
-                      p: 1.5,
-                      borderRadius: 2,
-                      cursor: "pointer",
-                      "&:hover": {
-                        bgcolor: alpha(theme.palette.primary.main, 0.08),
-                      },
-                    }}
-                    onClick={() => setSelectedCategory(cat)}
-                  >
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        width: 20,
-                        height: 20,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: 1,
-                        bgcolor: "primary.main",
-                        color: "#fff",
-                        fontWeight: 700,
-                      }}
-                    >
-                      {index + 1}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      fontWeight={600}
-                      sx={{ textTransform: "capitalize" }}
-                    >
-                      #{cat}
-                    </Typography>
-                  </Box>
-                ))}
+                {isLoading
+                  ? [1, 2, 3, 4, 5].map((i) => (
+                      <Box key={i} sx={{ display: "flex", gap: 1.5, p: 1.5 }}>
+                        <Skeleton variant="rounded" width={20} height={20} />
+                        <Skeleton variant="text" width={100} />
+                      </Box>
+                    ))
+                  : categories.slice(1, 6).map((cat, index) => (
+                      <Box
+                        key={cat}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1.5,
+                          p: 1.5,
+                          borderRadius: 2,
+                          cursor: "pointer",
+                          "&:hover": {
+                            bgcolor: alpha(theme.palette.primary.main, 0.08),
+                          },
+                        }}
+                        onClick={() => setSelectedCategory(cat)}
+                      >
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            width: 20,
+                            height: 20,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: 1,
+                            bgcolor: "primary.main",
+                            color: "#fff",
+                            fontWeight: 700,
+                          }}
+                        >
+                          {index + 1}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          fontWeight={600}
+                          sx={{ textTransform: "capitalize" }}
+                        >
+                          #{cat}
+                        </Typography>
+                      </Box>
+                    ))}
               </Box>
             </Card>
 

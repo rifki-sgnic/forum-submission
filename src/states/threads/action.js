@@ -1,4 +1,5 @@
 import api from "../../utils/api";
+import { setNotifActionCreator } from "../notification/action";
 
 const ActionType = {
   RECEIVE_THREADS: "RECEIVE_THREADS",
@@ -71,7 +72,12 @@ function asyncAddThread({ title, body, category }) {
       const thread = response.data.thread;
       dispatch(addThreadActionCreator(thread));
     } catch (error) {
-      alert(error.message);
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: error.message,
+        })
+      );
     }
   };
 }
@@ -84,7 +90,12 @@ function asyncToggleUpVoteThread(threadId) {
   return async (dispatch, getState) => {
     const { authUser } = getState();
     if (!authUser) {
-      alert("You need to login to vote.");
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: "You need to login to vote.",
+        })
+      );
       return;
     }
     dispatch(
@@ -97,7 +108,12 @@ function asyncToggleUpVoteThread(threadId) {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
-      alert(error.message);
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: error.message,
+        })
+      );
       dispatch(
         toggleUpVoteThreadActionCreator({ threadId, userId: authUser.id })
       );
@@ -109,7 +125,12 @@ function asyncToggleDownVoteThread(threadId) {
   return async (dispatch, getState) => {
     const { authUser } = getState();
     if (!authUser) {
-      alert("You need to login to vote.");
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: "You need to login to vote.",
+        })
+      );
       return;
     }
     dispatch(
@@ -122,7 +143,12 @@ function asyncToggleDownVoteThread(threadId) {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
-      alert(error.message);
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: error.message,
+        })
+      );
       dispatch(
         toggleDownVoteThreadActionCreator({ threadId, userId: authUser.id })
       );
@@ -134,7 +160,12 @@ function asyncToggleNeutralVoteThread(threadId) {
   return async (dispatch, getState) => {
     const { authUser } = getState();
     if (!authUser) {
-      alert("You need to login to vote.");
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: "You need to login to vote.",
+        })
+      );
       return;
     }
     dispatch(
@@ -147,7 +178,12 @@ function asyncToggleNeutralVoteThread(threadId) {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
-      alert(error.message);
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: error.message,
+        })
+      );
       dispatch(
         toggleNeutralVoteThreadActionCreator({ threadId, userId: authUser.id })
       );
@@ -157,13 +193,13 @@ function asyncToggleNeutralVoteThread(threadId) {
 
 export {
   ActionType,
-  receiveThreadsActionCreator,
   addThreadActionCreator,
-  toggleUpVoteThreadActionCreator,
-  toggleDownVoteThreadActionCreator,
-  toggleNeutralVoteThreadActionCreator,
   asyncAddThread,
-  asyncToggleUpVoteThread,
   asyncToggleDownVoteThread,
   asyncToggleNeutralVoteThread,
+  asyncToggleUpVoteThread,
+  receiveThreadsActionCreator,
+  toggleDownVoteThreadActionCreator,
+  toggleNeutralVoteThreadActionCreator,
+  toggleUpVoteThreadActionCreator,
 };

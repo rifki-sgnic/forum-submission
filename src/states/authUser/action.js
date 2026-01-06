@@ -1,4 +1,5 @@
 import api from "../../utils/api";
+import { setNotifActionCreator } from "../notification/action";
 
 const ActionType = {
   SET_AUTH_USER: "SET_AUTH_USER",
@@ -40,7 +41,12 @@ function asyncSetAuthUser({ email, password }) {
       const authUser = authUserResponse.data.user;
       dispatch(setAuthUserActionCreator(authUser));
     } catch (error) {
-      alert(error.message);
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: error.message,
+        })
+      );
     }
   };
 }

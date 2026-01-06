@@ -20,6 +20,7 @@ import {
   asyncToggleNeutralVoteThread,
   asyncToggleUpVoteThread,
 } from "../states/threads/action";
+import { setNotifActionCreator } from "../states/notification/action";
 import { getTimeAgo } from "../utils/format";
 
 function ThreadItem({ thread }) {
@@ -58,6 +59,12 @@ function ThreadItem({ thread }) {
   function handleUpVote(e) {
     e.stopPropagation();
     if (!authUser) {
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: "You need to login to vote.",
+        })
+      );
       navigate("/login");
       return;
     }
@@ -71,6 +78,12 @@ function ThreadItem({ thread }) {
   function handleDownVote(e) {
     e.stopPropagation();
     if (!authUser) {
+      dispatch(
+        setNotifActionCreator({
+          type: "error",
+          message: "You need to login to vote.",
+        })
+      );
       navigate("/login");
       return;
     }

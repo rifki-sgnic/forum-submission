@@ -4,6 +4,9 @@ import isPreloadReducer from "./isPreload/reducer";
 import threadDetailReducer from "./threadDetail/reducer";
 import threadsReducer from "./threads/reducer";
 import usersReducer from "./users/reducer";
+import leaderboardsReducer from "./leaderboards/reducer";
+import loadingReducer from "./loading/reducer";
+import notificationReducer from "./notification/reducer";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +15,9 @@ const store = configureStore({
     users: usersReducer,
     authUser: authUserReducer,
     threadDetail: threadDetailReducer,
+    leaderboards: leaderboardsReducer,
+    loading: loadingReducer,
+    notif: notificationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

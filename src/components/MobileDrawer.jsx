@@ -98,6 +98,20 @@ function MobileDrawer({ open, onClose, authUser, onSignOut }) {
         {/* Auth Actions */}
         <List sx={{ px: 2 }}>
           <ListItem disablePadding>
+            <ListItemButton component={Link} to="/" onClick={onClose}>
+              <ListItemText primary="Threads" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              component={Link}
+              to="/leaderboard"
+              onClick={onClose}
+            >
+              <ListItemText primary="Leaderboard" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
             <ListItemButton
               component={Link}
               to={authUser ? "/" : "/login"}

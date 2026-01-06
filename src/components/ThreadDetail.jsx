@@ -14,12 +14,14 @@ import { alpha, useTheme } from "@mui/material/styles";
 import parse from "html-react-parser";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { getTimeAgo } from "../utils/format";
+import { useNavigate } from "react-router";
 import {
   asyncToggleDownVoteThreadDetail,
   asyncToggleNeutralVoteThreadDetail,
   asyncToggleUpVoteThreadDetail,
 } from "../states/threadDetail/action";
+import useNotification from "../hooks/useNotification";
+import { getTimeAgo } from "../utils/format";
 
 function ThreadDetail({
   id,
@@ -35,10 +37,16 @@ function ThreadDetail({
 }) {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const notify = useNotification();
 
   function handleUpVote(e) {
     e.stopPropagation();
     if (!authUser) {
+      notify({
+        type: "error",
+        message: "You need to login to vote.",
+      });
       navigate("/login");
       return;
     }
@@ -52,6 +60,10 @@ function ThreadDetail({
   function handleDownVote(e) {
     e.stopPropagation();
     if (!authUser) {
+      notify({
+        type: "error",
+        message: "You need to login to vote.",
+      });
       navigate("/login");
       return;
     }
