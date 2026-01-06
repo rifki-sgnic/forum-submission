@@ -27,8 +27,8 @@ function Navigation({ authUser, onSignOut }) {
   const navigate = useNavigate();
 
   function toggleSettingsDrawer(open) {
-    return function (event) {
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    return function (e) {
+      if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
         return;
       }
       setSettingsOpen(open);
@@ -36,8 +36,8 @@ function Navigation({ authUser, onSignOut }) {
   }
 
   function toggleMobileMenu(open) {
-    return function (event) {
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    return function (e) {
+      if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
         return;
       }
       setMobileMenuOpen(open);

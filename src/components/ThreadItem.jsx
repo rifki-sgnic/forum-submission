@@ -37,8 +37,8 @@ function ThreadItem({ id, title, body, category, createdAt, user, upVotesBy = []
     navigate(`/threads/${id}`);
   }
 
-  function onThreadPress(event) {
-    if (event.key === 'Enter' || event.key === ' ') {
+  function onThreadPress(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
       navigate(`/threads/${id}`);
     }
   }

@@ -7,11 +7,9 @@ function useNotification() {
   const notify = ({ type = 'info', message = '', shouldClosePrev = false }) => {
     dispatch(
       setNotifActionCreator({
-        notif: {
-          type,
-          message,
-          shouldClosePrev,
-        },
+        type,
+        message,
+        shouldClosePrev,
       })
     );
   };

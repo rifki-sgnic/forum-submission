@@ -1,15 +1,15 @@
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import PaletteRoundedIcon from '@mui/icons-material/PaletteRounded';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import Box from '@mui/material/Box';
+import ButtonBase from '@mui/material/ButtonBase';
+import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
+import { alpha, useTheme } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ButtonBase from '@mui/material/ButtonBase';
-import { alpha, useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import useThemeMode from '../hooks/useTheme';
 
@@ -17,7 +17,7 @@ function SettingsDrawer({ open, onClose }) {
   const theme = useTheme();
   const { mode, setTheme, color, setColor } = useThemeMode();
 
-  function handleThemeChange(event, newMode) {
+  function handleThemeChange(_, newMode) {
     if (newMode !== null) {
       setTheme(newMode);
     }
@@ -61,11 +61,7 @@ function SettingsDrawer({ open, onClose }) {
 
         {/* Appearance Section */}
         <Box>
-          <Typography
-            variant="overline"
-            color="text.secondary"
-            sx={{ letterSpacing: 1 }}
-          >
+          <Typography variant="overline" color="text.secondary" sx={{ letterSpacing: 1 }}>
             Appearance
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -89,21 +85,13 @@ function SettingsDrawer({ open, onClose }) {
               },
             }}
           >
-            <ToggleButton
-              value="light"
-              aria-label="light mode"
-              sx={{ py: 1.5, gap: 1 }}
-            >
+            <ToggleButton value="light" aria-label="light mode" sx={{ py: 1.5, gap: 1 }}>
               <LightModeRoundedIcon sx={{ fontSize: 20 }} />
               <Typography variant="body2" fontWeight={600}>
                 Light
               </Typography>
             </ToggleButton>
-            <ToggleButton
-              value="dark"
-              aria-label="dark mode"
-              sx={{ py: 1.5, gap: 1 }}
-            >
+            <ToggleButton value="dark" aria-label="dark mode" sx={{ py: 1.5, gap: 1 }}>
               <DarkModeRoundedIcon sx={{ fontSize: 20 }} />
               <Typography variant="body2" fontWeight={600}>
                 Dark
@@ -116,11 +104,7 @@ function SettingsDrawer({ open, onClose }) {
 
         {/* Color Theme Section */}
         <Box>
-          <Typography
-            variant="overline"
-            color="text.secondary"
-            sx={{ letterSpacing: 1 }}
-          >
+          <Typography variant="overline" color="text.secondary" sx={{ letterSpacing: 1 }}>
             Color Theme
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -141,19 +125,14 @@ function SettingsDrawer({ open, onClose }) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   transition: 'all 0.2s ease',
-                  border:
-                    color === c.id
-                      ? `3px solid ${theme.palette.background.paper}`
-                      : '2px solid transparent',
+                  border: color === c.id ? `3px solid ${theme.palette.background.paper}` : '2px solid transparent',
                   boxShadow: color === c.id ? `0 0 0 2px ${c.value}` : 'none',
                   '&:hover': {
                     transform: 'scale(1.1)',
                   },
                 }}
               >
-                {color === c.id && (
-                  <CheckRoundedIcon sx={{ color: '#fff', fontSize: 24 }} />
-                )}
+                {color === c.id && <CheckRoundedIcon sx={{ color: '#fff', fontSize: 24 }} />}
               </ButtonBase>
             ))}
           </Box>
@@ -163,11 +142,7 @@ function SettingsDrawer({ open, onClose }) {
 
         {/* About Section */}
         <Box>
-          <Typography
-            variant="overline"
-            color="text.secondary"
-            sx={{ letterSpacing: 1 }}
-          >
+          <Typography variant="overline" color="text.secondary" sx={{ letterSpacing: 1 }}>
             About
           </Typography>
           <Box
@@ -183,8 +158,7 @@ function SettingsDrawer({ open, onClose }) {
               Threads Forum
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              A modern community discussion platform built with React and
-              Material UI.
+              A modern community discussion platform built with React and Material UI.
             </Typography>
           </Box>
         </Box>
