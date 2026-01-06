@@ -7,10 +7,10 @@ async function handleResponse(response) {
     return handleError(error);
   }
 
-  const contentType = response.headers.get("content-type");
-  if (contentType && contentType.includes("application/json")) {
+  const contentType = response.headers.get('content-type');
+  if (contentType && contentType.includes('application/json')) {
     return await response.json();
-  } else if (contentType && contentType.includes("text/")) {
+  } else if (contentType && contentType.includes('text/')) {
     return await response.text();
   } else {
     return await response.blob();
@@ -23,16 +23,16 @@ async function handleError(error) {
 
 const api = {
   async get(param, token = null, options = {}) {
-    return await this._fetch(param, token, { ...options, method: "GET" });
+    return await this._fetch(param, token, { ...options, method: 'GET' });
   },
   async post(param, token = null, options = {}) {
-    return await this._fetch(param, token, { ...options, method: "POST" });
+    return await this._fetch(param, token, { ...options, method: 'POST' });
   },
   async patch(param, token = null, options = {}) {
-    return await this._fetch(param, token, { ...options, method: "PATCH" });
+    return await this._fetch(param, token, { ...options, method: 'PATCH' });
   },
   async delete(param, token = null, options = {}) {
-    return await this._fetch(param, token, { ...options, method: "DELETE" });
+    return await this._fetch(param, token, { ...options, method: 'DELETE' });
   },
 
   async _fetch(param, token = null, options = {}) {
@@ -41,7 +41,7 @@ const api = {
     };
 
     if (!(options.body instanceof FormData)) {
-      headers["Content-Type"] = "application/json";
+      headers['Content-Type'] = 'application/json';
     }
 
     const fetchOptions = {
@@ -51,7 +51,6 @@ const api = {
 
     if (token) {
       headers.Authorization = `Bearer ${token}`;
-      // fetchOptions.credentials = "include";
     }
 
     try {

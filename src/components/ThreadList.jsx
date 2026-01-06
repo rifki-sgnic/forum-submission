@@ -1,16 +1,16 @@
-import Box from "@mui/material/Box";
-import PropTypes from "prop-types";
-import ThreadItem from "./ThreadItem";
-import ThreadSkeleton from "./ThreadSkeleton";
-import EmptyState from "./EmptyState";
+import Box from '@mui/material/Box';
+import PropTypes from 'prop-types';
+import ThreadItem from './ThreadItem';
+import ThreadSkeleton from './ThreadSkeleton';
+import EmptyState from './EmptyState';
 
 function ThreadList({ threads, loading = false }) {
   if (loading) {
     return (
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 2,
         }}
       >
@@ -28,13 +28,13 @@ function ThreadList({ threads, loading = false }) {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
         gap: 2,
       }}
     >
       {threads.map((thread) => (
-        <ThreadItem key={thread.id} thread={thread} />
+        <ThreadItem key={thread.id} {...thread} />
       ))}
     </Box>
   );

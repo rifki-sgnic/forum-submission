@@ -1,12 +1,12 @@
-import api from "../../utils/api";
-import { setNotifActionCreator } from "../notification/action";
+import api from '../../utils/api';
+import { setNotifActionCreator } from '../notification/action';
 
 const ActionType = {
-  RECEIVE_THREADS: "RECEIVE_THREADS",
-  ADD_THREAD: "ADD_THREAD",
-  TOGGLE_UP_VOTE_THREAD: "TOGGLE_UP_VOTE_THREAD",
-  TOGGLE_DOWN_VOTE_THREAD: "TOGGLE_DOWN_VOTE_THREAD",
-  TOGGLE_NEUTRAL_VOTE_THREAD: "TOGGLE_NEUTRAL_VOTE_THREAD",
+  RECEIVE_THREADS: 'RECEIVE_THREADS',
+  ADD_THREAD: 'ADD_THREAD',
+  TOGGLE_UP_VOTE_THREAD: 'TOGGLE_UP_VOTE_THREAD',
+  TOGGLE_DOWN_VOTE_THREAD: 'TOGGLE_DOWN_VOTE_THREAD',
+  TOGGLE_NEUTRAL_VOTE_THREAD: 'TOGGLE_NEUTRAL_VOTE_THREAD',
 };
 
 function receiveThreadsActionCreator(threads) {
@@ -60,8 +60,8 @@ function toggleNeutralVoteThreadActionCreator({ threadId, userId }) {
 function asyncAddThread({ title, body, category }) {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const response = await api.post("/threads", token, {
+      const token = localStorage.getItem('accessToken');
+      const response = await api.post('/threads', token, {
         body: JSON.stringify({
           title,
           body,
@@ -74,7 +74,7 @@ function asyncAddThread({ title, body, category }) {
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );
@@ -92,8 +92,8 @@ function asyncToggleUpVoteThread(threadId) {
     if (!authUser) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
-          message: "You need to login to vote.",
+          type: 'error',
+          message: 'You need to login to vote.',
         })
       );
       return;
@@ -103,14 +103,14 @@ function asyncToggleUpVoteThread(threadId) {
     );
 
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       await api.post(`/threads/${threadId}/up-vote`, token, {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );
@@ -127,8 +127,8 @@ function asyncToggleDownVoteThread(threadId) {
     if (!authUser) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
-          message: "You need to login to vote.",
+          type: 'error',
+          message: 'You need to login to vote.',
         })
       );
       return;
@@ -138,14 +138,14 @@ function asyncToggleDownVoteThread(threadId) {
     );
 
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       await api.post(`/threads/${threadId}/down-vote`, token, {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );
@@ -162,8 +162,8 @@ function asyncToggleNeutralVoteThread(threadId) {
     if (!authUser) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
-          message: "You need to login to vote.",
+          type: 'error',
+          message: 'You need to login to vote.',
         })
       );
       return;
@@ -173,14 +173,14 @@ function asyncToggleNeutralVoteThread(threadId) {
     );
 
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       await api.post(`/threads/${threadId}/neutral-vote`, token, {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );

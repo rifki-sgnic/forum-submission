@@ -1,27 +1,27 @@
-import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
-import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
-import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
-import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { alpha, useTheme } from "@mui/material/styles";
-import parse from "html-react-parser";
-import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
+import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
+import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
+import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
+import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { alpha, useTheme } from '@mui/material/styles';
+import parse from 'html-react-parser';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import useNotification from '../hooks/useNotification';
 import {
   asyncToggleDownVoteThreadDetail,
   asyncToggleNeutralVoteThreadDetail,
   asyncToggleUpVoteThreadDetail,
-} from "../states/threadDetail/action";
-import useNotification from "../hooks/useNotification";
-import { getTimeAgo } from "../utils/format";
+} from '../states/threadDetail/action';
+import { getTimeAgo } from '../utils/format';
 
 function ThreadDetail({
   id,
@@ -44,10 +44,10 @@ function ThreadDetail({
     e.stopPropagation();
     if (!authUser) {
       notify({
-        type: "error",
-        message: "You need to login to vote.",
+        type: 'error',
+        message: 'You need to login to vote.',
       });
-      navigate("/login");
+      navigate('/login');
       return;
     }
     if (isUpVoted) {
@@ -61,10 +61,10 @@ function ThreadDetail({
     e.stopPropagation();
     if (!authUser) {
       notify({
-        type: "error",
-        message: "You need to login to vote.",
+        type: 'error',
+        message: 'You need to login to vote.',
       });
-      navigate("/login");
+      navigate('/login');
       return;
     }
     if (isDownVoted) {
@@ -79,17 +79,17 @@ function ThreadDetail({
   const voteScore = upVotesBy.length - downVotesBy.length;
 
   return (
-    <Card sx={{ overflow: "visible" }}>
-      <Box sx={{ display: "flex" }}>
+    <Card sx={{ overflow: 'visible' }}>
+      <Box sx={{ display: 'flex' }}>
         {/* Voting Sidebar */}
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             p: 2,
             bgcolor: alpha(theme.palette.text.primary, 0.02),
-            borderRadius: "12px 0 0 12px",
+            borderRadius: '12px 0 0 12px',
             minWidth: 60,
           }}
         >
@@ -98,11 +98,11 @@ function ThreadDetail({
               size="small"
               onClick={handleUpVote}
               sx={{
-                color: isUpVoted ? "#f97316" : "text.secondary",
-                bgcolor: isUpVoted ? alpha("#f97316", 0.1) : "transparent",
-                "&:hover": {
-                  color: "#f97316",
-                  bgcolor: alpha("#f97316", 0.1),
+                color: isUpVoted ? '#f97316' : 'text.secondary',
+                bgcolor: isUpVoted ? alpha('#f97316', 0.1) : 'transparent',
+                '&:hover': {
+                  color: '#f97316',
+                  bgcolor: alpha('#f97316', 0.1),
                 },
               }}
             >
@@ -115,11 +115,7 @@ function ThreadDetail({
             sx={{
               fontWeight: 700,
               py: 0.5,
-              color: isUpVoted
-                ? "#f97316"
-                : isDownVoted
-                ? "#8b5cf6"
-                : "text.primary",
+              color: isUpVoted ? '#f97316' : isDownVoted ? '#8b5cf6' : 'text.primary',
             }}
           >
             {voteScore}
@@ -130,11 +126,11 @@ function ThreadDetail({
               size="small"
               onClick={handleDownVote}
               sx={{
-                color: isDownVoted ? "#8b5cf6" : "text.secondary",
-                bgcolor: isDownVoted ? alpha("#8b5cf6", 0.1) : "transparent",
-                "&:hover": {
-                  color: "#8b5cf6",
-                  bgcolor: alpha("#8b5cf6", 0.1),
+                color: isDownVoted ? '#8b5cf6' : 'text.secondary',
+                bgcolor: isDownVoted ? alpha('#8b5cf6', 0.1) : 'transparent',
+                '&:hover': {
+                  color: '#8b5cf6',
+                  bgcolor: alpha('#8b5cf6', 0.1),
                 },
               }}
             >
@@ -148,11 +144,11 @@ function ThreadDetail({
           {/* Header */}
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
+              display: 'flex',
+              alignItems: 'center',
               gap: 1.5,
               mb: 2,
-              flexWrap: "wrap",
+              flexWrap: 'wrap',
             }}
           >
             <Chip
@@ -162,33 +158,22 @@ function ThreadDetail({
               variant="outlined"
               sx={{ borderRadius: 2, fontWeight: 600 }}
             />
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Avatar
-                src={owner?.avatar}
-                alt={owner?.name}
-                sx={{ width: 28, height: 28, bgcolor: "primary.main" }}
-              >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Avatar src={owner?.avatar} alt={owner?.name} sx={{ width: 28, height: 28, bgcolor: 'primary.main' }}>
                 {owner?.name?.charAt(0)?.toUpperCase()}
               </Avatar>
               <Typography variant="body2" color="text.secondary">
-                <Box
-                  component="span"
-                  sx={{ color: "text.primary", fontWeight: 600 }}
-                >
+                <Box component="span" sx={{ color: 'text.primary', fontWeight: 600 }}>
                   {owner?.name}
                 </Box>
-                {" • "}
+                {' • '}
                 {getTimeAgo(createdAt)}
               </Typography>
             </Box>
           </Box>
 
           {/* Title */}
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={{ fontWeight: 700, mb: 3, lineHeight: 1.3 }}
-          >
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 3, lineHeight: 1.3 }}>
             {title}
           </Typography>
 
@@ -197,12 +182,12 @@ function ThreadDetail({
             component="div"
             variant="body1"
             sx={{
-              whiteSpace: "pre-line",
+              whiteSpace: 'pre-line',
               lineHeight: 1.8,
-              color: "text.secondary",
+              color: 'text.secondary',
               mb: 3,
-              "& div": { margin: 0 },
-              "& p": { margin: 0 },
+              '& div': { margin: 0 },
+              '& p': { margin: 0 },
             }}
           >
             {parse(body)}
@@ -211,25 +196,25 @@ function ThreadDetail({
           {/* Actions */}
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
+              display: 'flex',
+              alignItems: 'center',
               gap: 1,
-              flexWrap: "wrap",
+              flexWrap: 'wrap',
             }}
           >
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
+                display: 'flex',
+                alignItems: 'center',
                 gap: 0.5,
                 px: 2,
                 py: 1,
                 borderRadius: 2,
                 bgcolor: alpha(theme.palette.text.primary, 0.05),
-                cursor: "pointer",
-                "&:hover": {
+                cursor: 'pointer',
+                '&:hover': {
                   bgcolor: alpha(theme.palette.primary.main, 0.1),
-                  color: "primary.main",
+                  color: 'primary.main',
                 },
               }}
             >
@@ -241,17 +226,17 @@ function ThreadDetail({
 
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
+                display: 'flex',
+                alignItems: 'center',
                 gap: 0.5,
                 px: 2,
                 py: 1,
                 borderRadius: 2,
                 bgcolor: alpha(theme.palette.text.primary, 0.05),
-                cursor: "pointer",
-                "&:hover": {
+                cursor: 'pointer',
+                '&:hover': {
                   bgcolor: alpha(theme.palette.primary.main, 0.1),
-                  color: "primary.main",
+                  color: 'primary.main',
                 },
               }}
             >
@@ -263,17 +248,17 @@ function ThreadDetail({
 
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
+                display: 'flex',
+                alignItems: 'center',
                 gap: 0.5,
                 px: 2,
                 py: 1,
                 borderRadius: 2,
                 bgcolor: alpha(theme.palette.text.primary, 0.05),
-                cursor: "pointer",
-                "&:hover": {
+                cursor: 'pointer',
+                '&:hover': {
                   bgcolor: alpha(theme.palette.primary.main, 0.1),
-                  color: "primary.main",
+                  color: 'primary.main',
                 },
               }}
             >
@@ -290,7 +275,15 @@ function ThreadDetail({
 }
 
 ThreadDetail.propTypes = {
-  thread: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  owner: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
+  upVotesBy: PropTypes.array,
+  downVotesBy: PropTypes.array,
   authUser: PropTypes.object,
 };
 

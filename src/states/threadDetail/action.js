@@ -1,16 +1,13 @@
-import api from "../../utils/api";
-import {
-  hideLoadingActionCreator,
-  showLoadingActionCreator,
-} from "../loading/action";
-import { setNotifActionCreator } from "../notification/action";
+import api from '../../utils/api';
+import { hideLoadingActionCreator, showLoadingActionCreator } from '../loading/action';
+import { setNotifActionCreator } from '../notification/action';
 
 const ActionType = {
-  RECEIVE_THREAD_DETAIL: "RECEIVE_THREAD_DETAIL",
-  CLEAR_THREAD_DETAIL: "CLEAR_THREAD_DETAIL",
-  TOGGLE_UP_VOTE_THREAD_DETAIL: "TOGGLE_UP_VOTE_THREAD_DETAIL",
-  TOGGLE_DOWN_VOTE_THREAD_DETAIL: "TOGGLE_DOWN_VOTE_THREAD_DETAIL",
-  TOGGLE_NEUTRAL_VOTE_THREAD_DETAIL: "TOGGLE_NEUTRAL_VOTE_THREAD_DETAIL",
+  RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
+  CLEAR_THREAD_DETAIL: 'CLEAR_THREAD_DETAIL',
+  TOGGLE_UP_VOTE_THREAD_DETAIL: 'TOGGLE_UP_VOTE_THREAD_DETAIL',
+  TOGGLE_DOWN_VOTE_THREAD_DETAIL: 'TOGGLE_DOWN_VOTE_THREAD_DETAIL',
+  TOGGLE_NEUTRAL_VOTE_THREAD_DETAIL: 'TOGGLE_NEUTRAL_VOTE_THREAD_DETAIL',
 };
 
 function receiveThreadDetailActionCreator(threadDetail) {
@@ -62,7 +59,7 @@ function asyncReceiveThreadDetail(threadId) {
   return async (dispatch) => {
     dispatch(showLoadingActionCreator());
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       const response = await api.get(`/threads/${threadId}`, token);
       const threadDetail = response.data.detailThread;
 
@@ -70,7 +67,7 @@ function asyncReceiveThreadDetail(threadId) {
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );
@@ -85,31 +82,27 @@ function asyncToggleUpVoteThreadDetail(threadId) {
     if (!authUser) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
-          message: "You need to login to vote.",
+          type: 'error',
+          message: 'You need to login to vote.',
         })
       );
       return;
     }
-    dispatch(
-      toggleUpVoteThreadDetailActionCreator({ threadId, userId: authUser.id })
-    );
+    dispatch(toggleUpVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
 
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       await api.post(`/threads/${threadId}/up-vote`, token, {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );
-      dispatch(
-        toggleUpVoteThreadDetailActionCreator({ threadId, userId: authUser.id })
-      );
+      dispatch(toggleUpVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
     }
   };
 }
@@ -120,25 +113,23 @@ function asyncToggleDownVoteThreadDetail(threadId) {
     if (!authUser) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
-          message: "You need to login to vote.",
+          type: 'error',
+          message: 'You need to login to vote.',
         })
       );
       return;
     }
-    dispatch(
-      toggleDownVoteThreadDetailActionCreator({ threadId, userId: authUser.id })
-    );
+    dispatch(toggleDownVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
 
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       await api.post(`/threads/${threadId}/down-vote`, token, {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );
@@ -158,8 +149,8 @@ function asyncToggleNeutralVoteThreadDetail(threadId) {
     if (!authUser) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
-          message: "You need to login to vote.",
+          type: 'error',
+          message: 'You need to login to vote.',
         })
       );
       return;
@@ -172,14 +163,14 @@ function asyncToggleNeutralVoteThreadDetail(threadId) {
     );
 
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       await api.post(`/threads/${threadId}/neutral-vote`, token, {
         body: JSON.stringify({ userId: authUser.id }),
       });
     } catch (error) {
       dispatch(
         setNotifActionCreator({
-          type: "error",
+          type: 'error',
           message: error.message,
         })
       );

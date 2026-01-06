@@ -1,23 +1,23 @@
-import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import { alpha, useTheme } from "@mui/material/styles";
-import { Link, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import { alpha, useTheme } from '@mui/material/styles';
+import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function MobileDrawer({ open, onClose, authUser, onSignOut }) {
   const theme = useTheme();
   const location = useLocation();
 
   const navigationMenus = [
-    { id: 1, label: "Home", href: "/" },
-    { id: 2, label: "Leaderboard", href: "/leaderboard" },
+    { id: 1, label: 'Home', href: '/' },
+    { id: 2, label: 'Leaderboard', href: '/leaderboard' },
   ];
 
   function isActive(href) {
@@ -31,29 +31,29 @@ function MobileDrawer({ open, onClose, authUser, onSignOut }) {
 
   return (
     <Drawer anchor="left" open={open} onClose={onClose}>
-      <Box sx={{ width: 280, pt: 3, height: "100%" }} role="presentation">
+      <Box sx={{ width: 280, pt: 3, height: '100%' }} role="presentation">
         {/* Header */}
         <Box
           sx={{
             px: 3,
             pb: 2,
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 1.5,
           }}
         >
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               width: 40,
               height: 40,
               borderRadius: 2,
-              bgcolor: "primary.main",
+              bgcolor: 'primary.main',
             }}
           >
-            <RocketLaunchIcon sx={{ color: "#fff", fontSize: 20 }} />
+            <RocketLaunchIcon sx={{ color: '#fff', fontSize: 20 }} />
           </Box>
           <Typography variant="h6" fontWeight={700} letterSpacing={0.5}>
             THREADS
@@ -73,10 +73,10 @@ function MobileDrawer({ open, onClose, authUser, onSignOut }) {
                 selected={isActive(menu.href)}
                 sx={{
                   borderRadius: 2,
-                  "&.Mui-selected": {
+                  '&.Mui-selected': {
                     bgcolor: alpha(theme.palette.primary.main, 0.1),
-                    color: "primary.main",
-                    "&:hover": {
+                    color: 'primary.main',
+                    '&:hover': {
                       bgcolor: alpha(theme.palette.primary.main, 0.15),
                     },
                   },
@@ -114,15 +114,15 @@ function MobileDrawer({ open, onClose, authUser, onSignOut }) {
           <ListItem disablePadding>
             <ListItemButton
               component={Link}
-              to={authUser ? "/" : "/login"}
+              to={authUser ? '/' : '/login'}
               onClick={authUser ? handleLogout : onClose}
               sx={{
                 borderRadius: 2,
-                color: authUser ? "error.main" : "primary.main",
+                color: authUser ? 'error.main' : 'primary.main',
                 bgcolor: authUser
                   ? alpha(theme.palette.error.main, 0.05)
                   : alpha(theme.palette.primary.main, 0.05),
-                "&:hover": {
+                '&:hover': {
                   bgcolor: authUser
                     ? alpha(theme.palette.error.main, 0.1)
                     : alpha(theme.palette.primary.main, 0.1),
@@ -130,7 +130,7 @@ function MobileDrawer({ open, onClose, authUser, onSignOut }) {
               }}
             >
               <ListItemText
-                primary={authUser ? "Logout" : "Login"}
+                primary={authUser ? 'Logout' : 'Login'}
                 primaryTypographyProps={{ fontWeight: 700 }}
               />
             </ListItemButton>

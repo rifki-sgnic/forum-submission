@@ -1,16 +1,16 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
-import Navigation from "./components/Navigation";
-import AddThreadPage from "./pages/AddThreadPage";
-import DetailPage from "./pages/DetailPage";
-import HomePage from "./pages/HomePage";
-import LeaderboardPage from "./pages/LeaderboardPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import LoginPage from "./pages/auth/LoginPage";
-import RegisterPage from "./pages/auth/RegisterPage";
-import { asyncUnsetAuthUser } from "./states/authUser/action";
-import { asyncPreloadProcess } from "./states/isPreload/action";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import AddThreadPage from './pages/AddThreadPage';
+import DetailPage from './pages/DetailPage';
+import HomePage from './pages/HomePage';
+import LeaderboardPage from './pages/LeaderboardPage';
+import NotFoundPage from './pages/NotFoundPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import { asyncUnsetAuthUser } from './states/authUser/action';
+import { asyncPreloadProcess } from './states/isPreload/action';
 
 function App() {
   const authUser = useSelector((state) => state.authUser);

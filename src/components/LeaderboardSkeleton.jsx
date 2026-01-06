@@ -1,10 +1,9 @@
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import Skeleton from "@mui/material/Skeleton";
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 
 function LeaderboardSkeleton() {
   return (
-    <Box sx={{ p: 2, display: "flex", gap: 2, alignItems: "center" }}>
+    <Box sx={{ p: 2, display: 'flex', gap: 2, alignItems: 'center' }}>
       <Skeleton variant="circular" width={40} height={40} />
       <Box sx={{ flex: 1 }}>
         <Skeleton variant="text" width={120} height={24} />

@@ -1,8 +1,9 @@
-import api from "../../utils/api";
-import { setAuthUserActionCreator } from "../authUser/action";
+import api from '../../utils/api';
+import { setAuthUserActionCreator } from '../authUser/action';
+import { setNotifActionCreator } from '../notification/action';
 
 const ActionType = {
-  SET_IS_PRELOAD: "SET_IS_PRELOAD",
+  SET_IS_PRELOAD: 'SET_IS_PRELOAD',
 };
 
 function setIsPreloadActionCreator(isPreload) {
@@ -17,10 +18,10 @@ function setIsPreloadActionCreator(isPreload) {
 function asyncPreloadProcess() {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
 
       if (token) {
-        const authUserResponse = await api.get("/users/me", token);
+        const authUserResponse = await api.get('/users/me', token);
         const authUser = authUserResponse.data.user;
         dispatch(setAuthUserActionCreator(authUser));
       } else {
@@ -28,6 +29,13 @@ function asyncPreloadProcess() {
       }
     } catch (error) {
       dispatch(setAuthUserActionCreator(null));
+
+      dispatch(
+        setNotifActionCreator({
+          type: 'error',
+          message: error.message,
+        })
+      );
     } finally {
       dispatch(setIsPreloadActionCreator(false));
     }

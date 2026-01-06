@@ -1,6 +1,6 @@
 function isPreloadReducer(isPreload = true, action = {}) {
   switch (action.type) {
-    case "SET_IS_PRELOAD":
+    case 'SET_IS_PRELOAD':
       return action.payload.isPreload;
     default:
       return isPreload;

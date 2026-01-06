@@ -1,4 +1,4 @@
-import { ActionType } from "./action";
+import { ActionType } from './action';
 
 function notificationReducer(notif = null, action = {}) {
   switch (action.type) {

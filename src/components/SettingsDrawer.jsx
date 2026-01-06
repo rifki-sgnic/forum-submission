@@ -1,17 +1,17 @@
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import PaletteRoundedIcon from "@mui/icons-material/PaletteRounded";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import ButtonBase from "@mui/material/ButtonBase";
-import { alpha, useTheme } from "@mui/material/styles";
-import PropTypes from "prop-types";
-import useThemeMode from "../hooks/useTheme";
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
+import PaletteRoundedIcon from '@mui/icons-material/PaletteRounded';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ButtonBase from '@mui/material/ButtonBase';
+import { alpha, useTheme } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import useThemeMode from '../hooks/useTheme';
 
 function SettingsDrawer({ open, onClose }) {
   const theme = useTheme();
@@ -24,28 +24,28 @@ function SettingsDrawer({ open, onClose }) {
   }
 
   const colors = [
-    { id: "purple", value: "#6366f1", label: "Purple" },
-    { id: "blue", value: "#2563eb", label: "Blue" },
-    { id: "green", value: "#10b981", label: "Green" },
+    { id: 'purple', value: '#6366f1', label: 'Purple' },
+    { id: 'blue', value: '#2563eb', label: 'Blue' },
+    { id: 'green', value: '#10b981', label: 'Green' },
   ];
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
-      <Box sx={{ width: 300, p: 3, height: "100%" }} role="presentation">
+      <Box sx={{ width: 300, p: 3, height: '100%' }} role="presentation">
         {/* Header */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               width: 40,
               height: 40,
               borderRadius: 2,
-              bgcolor: "primary.main",
+              bgcolor: 'primary.main',
             }}
           >
-            <PaletteRoundedIcon sx={{ color: "#fff", fontSize: 20 }} />
+            <PaletteRoundedIcon sx={{ color: '#fff', fontSize: 20 }} />
           </Box>
           <Box>
             <Typography variant="h6" fontWeight={700}>
@@ -82,9 +82,9 @@ function SettingsDrawer({ open, onClose }) {
               bgcolor: alpha(theme.palette.text.primary, 0.03),
               borderRadius: 2,
               p: 0.5,
-              "& .MuiToggleButtonGroup-grouped": {
-                border: "none",
-                borderRadius: "8px !important",
+              '& .MuiToggleButtonGroup-grouped': {
+                border: 'none',
+                borderRadius: '8px !important',
                 mx: 0.25,
               },
             }}
@@ -127,7 +127,7 @@ function SettingsDrawer({ open, onClose }) {
             Select an accent color
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Box sx={{ display: 'flex', gap: 2 }}>
             {colors.map((c) => (
               <ButtonBase
                 key={c.id}
@@ -135,24 +135,24 @@ function SettingsDrawer({ open, onClose }) {
                 sx={{
                   width: 48,
                   height: 48,
-                  borderRadius: "50%",
+                  borderRadius: '50%',
                   bgcolor: c.value,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "all 0.2s ease",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s ease',
                   border:
                     color === c.id
                       ? `3px solid ${theme.palette.background.paper}`
-                      : "2px solid transparent",
-                  boxShadow: color === c.id ? `0 0 0 2px ${c.value}` : "none",
-                  "&:hover": {
-                    transform: "scale(1.1)",
+                      : '2px solid transparent',
+                  boxShadow: color === c.id ? `0 0 0 2px ${c.value}` : 'none',
+                  '&:hover': {
+                    transform: 'scale(1.1)',
                   },
                 }}
               >
                 {color === c.id && (
-                  <CheckRoundedIcon sx={{ color: "#fff", fontSize: 24 }} />
+                  <CheckRoundedIcon sx={{ color: '#fff', fontSize: 24 }} />
                 )}
               </ButtonBase>
             ))}

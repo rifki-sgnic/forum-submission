@@ -1,6 +1,6 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { alpha, useTheme } from "@mui/material/styles";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { alpha, useTheme } from '@mui/material/styles';
 
 function EmptyState() {
   const theme = useTheme();
@@ -8,13 +8,13 @@ function EmptyState() {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         py: 8,
         px: 3,
-        textAlign: "center",
+        textAlign: 'center',
         background: alpha(theme.palette.primary.main, 0.03),
         borderRadius: 4,
         border: `2px dashed ${alpha(theme.palette.primary.main, 0.2)}`,
@@ -24,7 +24,7 @@ function EmptyState() {
         sx={{
           fontSize: 64,
           mb: 2,
-          filter: "grayscale(50%)",
+          filter: 'grayscale(50%)',
         }}
       >
         💬

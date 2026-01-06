@@ -1,51 +1,51 @@
-import { createTheme, alpha } from "@mui/material/styles";
+import { createTheme, alpha } from '@mui/material/styles';
 
 const colorPresets = {
   purple: {
     primary: {
-      main: "#6366f1",
-      light: "#818cf8",
-      dark: "#4f46e5",
+      main: '#6366f1',
+      light: '#818cf8',
+      dark: '#4f46e5',
     },
     secondary: {
-      main: "#f97316",
-      light: "#fb923c",
-      dark: "#ea580c",
+      main: '#f97316',
+      light: '#fb923c',
+      dark: '#ea580c',
     },
   },
   blue: {
     primary: {
-      main: "#2563eb",
-      light: "#60a5fa",
-      dark: "#1d4ed8",
+      main: '#2563eb',
+      light: '#60a5fa',
+      dark: '#1d4ed8',
     },
     secondary: {
-      main: "#06b6d4",
-      light: "#22d3ee",
-      dark: "#0891b2",
+      main: '#06b6d4',
+      light: '#22d3ee',
+      dark: '#0891b2',
     },
   },
   green: {
     primary: {
-      main: "#10b981",
-      light: "#34d399",
-      dark: "#059669",
+      main: '#10b981',
+      light: '#34d399',
+      dark: '#059669',
     },
     secondary: {
-      main: "#84cc16", // Lime
-      light: "#a3e635",
-      dark: "#65a30d",
+      main: '#84cc16', // Lime
+      light: '#a3e635',
+      dark: '#65a30d',
     },
   },
 };
 
-function createAppTheme(mode, color = "purple") {
+function createAppTheme(mode, color = 'purple') {
   const selectedColors = colorPresets[color] || colorPresets.purple;
 
   const colors = {
     ...selectedColors,
-    upvote: "#f97316",
-    downvote: "#8b5cf6",
+    upvote: '#f97316',
+    downvote: '#8b5cf6',
   };
 
   return createTheme({
@@ -54,31 +54,31 @@ function createAppTheme(mode, color = "purple") {
       primary: colors.primary,
       secondary: colors.secondary,
       background: {
-        default: mode === "light" ? "#f8fafc" : "#0a0a0f",
-        paper: mode === "light" ? "#ffffff" : "#16161f",
+        default: mode === 'light' ? '#f8fafc' : '#0a0a0f',
+        paper: mode === 'light' ? '#ffffff' : '#16161f',
       },
       text: {
-        primary: mode === "light" ? "#0f172a" : "#f1f5f9",
-        secondary: mode === "light" ? "#64748b" : "#94a3b8",
+        primary: mode === 'light' ? '#0f172a' : '#f1f5f9',
+        secondary: mode === 'light' ? '#64748b' : '#94a3b8',
       },
       divider:
-        mode === "light" ? alpha("#64748b", 0.12) : alpha("#94a3b8", 0.12),
+        mode === 'light' ? alpha('#64748b', 0.12) : alpha('#94a3b8', 0.12),
       success: {
-        main: "#10b981",
+        main: '#10b981',
       },
       error: {
-        main: "#ef4444",
+        main: '#ef4444',
       },
     },
     typography: {
       fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
       h1: {
         fontWeight: 800,
-        letterSpacing: "-0.02em",
+        letterSpacing: '-0.02em',
       },
       h2: {
         fontWeight: 700,
-        letterSpacing: "-0.01em",
+        letterSpacing: '-0.01em',
       },
       h3: {
         fontWeight: 700,
@@ -94,7 +94,7 @@ function createAppTheme(mode, color = "purple") {
       },
       button: {
         fontWeight: 600,
-        textTransform: "none",
+        textTransform: 'none',
       },
     },
     shape: {
@@ -104,7 +104,7 @@ function createAppTheme(mode, color = "purple") {
       MuiCssBaseline: {
         styleOverrides: {
           body: {
-            backgroundColor: mode === "light" ? "#f8fafc" : "#0a0a0f",
+            backgroundColor: mode === 'light' ? '#f8fafc' : '#0a0a0f',
           },
         },
       },
@@ -112,19 +112,19 @@ function createAppTheme(mode, color = "purple") {
         styleOverrides: {
           root: {
             borderRadius: 10,
-            padding: "10px 20px",
-            boxShadow: "none",
-            transition: "all 0.2s ease",
-            "&:hover": {
+            padding: '10px 20px',
+            boxShadow: 'none',
+            transition: 'all 0.2s ease',
+            '&:hover': {
               boxShadow:
-                mode === "light"
-                  ? "0 4px 12px rgba(0, 0, 0, 0.1)"
-                  : "0 4px 12px rgba(0, 0, 0, 0.3)",
-              transform: "translateY(-1px)",
+                mode === 'light'
+                  ? '0 4px 12px rgba(0, 0, 0, 0.1)'
+                  : '0 4px 12px rgba(0, 0, 0, 0.3)',
+              transform: 'translateY(-1px)',
             },
           },
           contained: {
-            "&:hover": {
+            '&:hover': {
               boxShadow: `0 4px 12px ${alpha(colors.primary.main, 0.3)}`,
             },
           },
@@ -133,20 +133,20 @@ function createAppTheme(mode, color = "purple") {
       MuiCard: {
         styleOverrides: {
           root: {
-            background: mode === "light" ? "#ffffff" : "#16161f",
+            background: mode === 'light' ? '#ffffff' : '#16161f',
             border: `1px solid ${
-              mode === "light" ? alpha("#64748b", 0.1) : alpha("#94a3b8", 0.1)
+              mode === 'light' ? alpha('#64748b', 0.1) : alpha('#94a3b8', 0.1)
             }`,
             boxShadow:
-              mode === "light"
-                ? "0 1px 3px rgba(0, 0, 0, 0.05)"
-                : "0 1px 3px rgba(0, 0, 0, 0.2)",
-            transition: "all 0.2s ease",
-            "&:hover": {
+              mode === 'light'
+                ? '0 1px 3px rgba(0, 0, 0, 0.05)'
+                : '0 1px 3px rgba(0, 0, 0, 0.2)',
+            transition: 'all 0.2s ease',
+            '&:hover': {
               boxShadow:
-                mode === "light"
-                  ? "0 4px 12px rgba(0, 0, 0, 0.08)"
-                  : "0 4px 12px rgba(0, 0, 0, 0.3)",
+                mode === 'light'
+                  ? '0 4px 12px rgba(0, 0, 0, 0.08)'
+                  : '0 4px 12px rgba(0, 0, 0, 0.3)',
             },
           },
         },
@@ -155,15 +155,15 @@ function createAppTheme(mode, color = "purple") {
         styleOverrides: {
           root: {
             background:
-              mode === "light"
-                ? "rgba(255, 255, 255, 0.9)"
-                : "rgba(10, 10, 15, 0.9)",
-            backdropFilter: "blur(12px)",
+              mode === 'light'
+                ? 'rgba(255, 255, 255, 0.9)'
+                : 'rgba(10, 10, 15, 0.9)',
+            backdropFilter: 'blur(12px)',
             borderBottom: `1px solid ${
-              mode === "light" ? alpha("#64748b", 0.1) : alpha("#94a3b8", 0.1)
+              mode === 'light' ? alpha('#64748b', 0.1) : alpha('#94a3b8', 0.1)
             }`,
-            boxShadow: "none",
-            color: mode === "light" ? "#0f172a" : "#f1f5f9",
+            boxShadow: 'none',
+            color: mode === 'light' ? '#0f172a' : '#f1f5f9',
           },
         },
       },
@@ -179,25 +179,25 @@ function createAppTheme(mode, color = "purple") {
         styleOverrides: {
           root: {
             borderRadius: 10,
-            transition: "all 0.2s ease",
+            transition: 'all 0.2s ease',
           },
         },
       },
       MuiTextField: {
         styleOverrides: {
           root: {
-            "& .MuiOutlinedInput-root": {
+            '& .MuiOutlinedInput-root': {
               borderRadius: 10,
-              "& fieldset": {
+              '& fieldset': {
                 borderColor:
-                  mode === "light"
-                    ? alpha("#64748b", 0.2)
-                    : alpha("#94a3b8", 0.2),
+                  mode === 'light'
+                    ? alpha('#64748b', 0.2)
+                    : alpha('#94a3b8', 0.2),
               },
-              "&:hover fieldset": {
+              '&:hover fieldset': {
                 borderColor: colors.primary.main,
               },
-              "&.Mui-focused fieldset": {
+              '&.Mui-focused fieldset': {
                 borderColor: colors.primary.main,
               },
             },
@@ -207,7 +207,7 @@ function createAppTheme(mode, color = "purple") {
       MuiDrawer: {
         styleOverrides: {
           paper: {
-            background: mode === "light" ? "#ffffff" : "#16161f",
+            background: mode === 'light' ? '#ffffff' : '#16161f',
           },
         },
       },
@@ -215,10 +215,10 @@ function createAppTheme(mode, color = "purple") {
         styleOverrides: {
           root: {
             borderRadius: 8,
-            "&.Mui-selected": {
+            '&.Mui-selected': {
               background: alpha(colors.primary.main, 0.1),
               color: colors.primary.main,
-              "&:hover": {
+              '&:hover': {
                 background: alpha(colors.primary.main, 0.15),
               },
             },

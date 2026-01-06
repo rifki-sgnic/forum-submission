@@ -1,10 +1,22 @@
-import { useDispatch } from "react-redux";
-import { setNotifActionCreator } from "../states/notification/action";
+import { useDispatch } from 'react-redux';
+import { setNotifActionCreator } from '../states/notification/action';
 
-function useNotification({ type = "error", message = "" }) {
+function useNotification() {
   const dispatch = useDispatch();
 
-  return dispatch(setNotifActionCreator({ type, message }));
+  const notify = ({ type = 'info', message = '', shouldClosePrev = false }) => {
+    dispatch(
+      setNotifActionCreator({
+        notif: {
+          type,
+          message,
+          shouldClosePrev,
+        },
+      })
+    );
+  };
+
+  return notify;
 }
 
 export default useNotification;
