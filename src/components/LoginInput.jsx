@@ -25,7 +25,7 @@ function LoginInput({ onLogin, isLoading }) {
     },
   });
 
-  const { values, handleChange, errors, touched, handleBlur, handleSubmit } = formik;
+  const { values, errors, touched, handleBlur, handleSubmit } = formik;
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
