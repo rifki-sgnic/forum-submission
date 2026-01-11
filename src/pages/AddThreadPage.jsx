@@ -1,37 +1,23 @@
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import useForm from '../hooks/useForm';
+import ThreadInput from '../components/ThreadInput';
 import { asyncAddThread } from '../states/threads/action';
 
 function AddThreadPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const theme = useTheme();
-  const initialValues = {
-    title: '',
-    category: '',
-    body: '',
-  };
-  const { values, handleChange } = useForm(initialValues);
 
   const onAddThread = (values) => {
     dispatch(asyncAddThread(values));
     navigate('/');
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!values.title || !values.body || !values.category) return;
-    onAddThread(values);
   };
 
   return (
@@ -61,78 +47,7 @@ function AddThreadPage() {
             Start a discussion, ask a question, or share something interesting.
           </Typography>
 
-          <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            <TextField
-              label="Title"
-              name="title"
-              value={values.title}
-              onChange={handleChange}
-              placeholder="Give your thread a clear title"
-              fullWidth
-              required
-              variant="outlined"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  bgcolor: alpha(theme.palette.background.default, 0.5),
-                },
-              }}
-            />
-
-            <TextField
-              label="Category"
-              name="category"
-              value={values.category}
-              onChange={handleChange}
-              placeholder="e.g., technology, general, introduction"
-              fullWidth
-              required
-              variant="outlined"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  bgcolor: alpha(theme.palette.background.default, 0.5),
-                },
-              }}
-            />
-
-            <TextField
-              label="Content"
-              name="body"
-              value={values.body}
-              onChange={handleChange}
-              placeholder="What's on your mind? (HTML supported)"
-              fullWidth
-              required
-              multiline
-              minRows={6}
-              variant="outlined"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  bgcolor: alpha(theme.palette.background.default, 0.5),
-                },
-              }}
-              helperText="You can use simple HTML tags for formatting."
-            />
-
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                startIcon={<SendRoundedIcon />}
-                disabled={!values.title || !values.body || !values.category}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 3,
-                  fontWeight: 700,
-                  textTransform: 'none',
-                  boxShadow: `0 8px 16px -4px ${alpha(theme.palette.primary.main, 0.3)}`,
-                }}
-              >
-                Post Thread
-              </Button>
-            </Box>
-          </Box>
+          <ThreadInput onAddThread={onAddThread} />
         </Card>
       </Container>
     </Box>
