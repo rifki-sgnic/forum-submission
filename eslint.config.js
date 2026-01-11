@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import daStyle from 'eslint-config-dicodingacademy';
+import pluginCypress from 'eslint-plugin-cypress';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
@@ -7,6 +8,7 @@ import globals from 'globals';
 
 export default defineConfig([
   daStyle,
+  pluginCypress.configs.recommended,
   globalIgnores(['dist']),
   {
     files: ['**/*.{js,jsx}'],

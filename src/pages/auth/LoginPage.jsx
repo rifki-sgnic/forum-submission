@@ -1,18 +1,13 @@
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import useForm from '../../hooks/useForm';
+import LoginInput from '../../components/LoginInput';
 import { asyncSetAuthUser } from '../../states/authUser/action';
 
 function LoginPage() {
@@ -20,14 +15,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const isLoading = useSelector((state) => state.loading > 0);
 
-  const initialValues = {
-    email: '',
-    password: '',
-  };
-  const { values, handleChange } = useForm(initialValues);
-
-  async function onLogin(event) {
-    event.preventDefault();
+  async function onLogin(values) {
     const user = await dispatch(asyncSetAuthUser(values));
 
     if (user) {
@@ -72,71 +60,7 @@ function LoginPage() {
               Sign in to continue the conversation
             </Typography>
 
-            <Box component="form" onSubmit={onLogin} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-              <TextField
-                name="email"
-                label="Email"
-                variant="outlined"
-                fullWidth
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                required
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <EmailRoundedIcon sx={{ color: 'text.secondary' }} />
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
-              <TextField
-                name="password"
-                label="Password"
-                variant="outlined"
-                fullWidth
-                type="password"
-                value={values.password}
-                onChange={handleChange}
-                required
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LockRoundedIcon sx={{ color: 'text.secondary' }} />
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
-
-              <Box sx={{ textAlign: 'right' }}>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: 'primary.main',
-                    cursor: 'pointer',
-                    fontWeight: 600,
-                    '&:hover': { textDecoration: 'underline' },
-                  }}
-                >
-                  Forgot password?
-                </Typography>
-              </Box>
-
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                fullWidth
-                sx={{ py: 1.5, fontWeight: 700 }}
-                disabled={isLoading}
-              >
-                {isLoading ? 'Signing In...' : 'Sign In'}
-              </Button>
-            </Box>
+            <LoginInput onLogin={onLogin} isLoading={isLoading} />
 
             <Divider sx={{ my: 3 }}>
               <Typography variant="caption" color="text.secondary">
