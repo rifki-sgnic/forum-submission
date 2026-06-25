@@ -1,16 +1,112 @@
-# React + Vite
+# 🧵 Threads Forum
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern community discussion platform built with React and Redux Toolkit. Create threads, join conversations, and engage with the community — all in a clean, responsive interface.
 
-Currently, two official plugins are available:
+🔗 **[Live Demo](https://forum-submission-taupe.vercel.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🧵 Browse and create discussion threads
+- 💬 Comment and engage on threads
+- 🔐 User authentication (register & login)
+- 👍 Upvote / downvote threads and comments
+- 🗂️ Filter threads by category
+- 📊 Leaderboard — see the most active users
+- 📱 Fully responsive design
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+| Category | Tech |
+|---|---|
+| Framework | React 19 |
+| State Management | Redux Toolkit + React Redux |
+| Routing | React Router v7 |
+| UI Library | Material UI (MUI) v7 |
+| Form Handling | Formik + Yup |
+| Notifications | Notistack |
+| Build Tool | Vite |
+| Unit Testing | Vitest + Testing Library |
+| E2E Testing | Cypress |
+| Component Dev | Storybook |
+| Deployment | Vercel |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js >= 18
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/rifki-sgnic/forum-submission.git
+cd forum-submission
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+```
+
+### Running the App
+
+```bash
+# Development server
+npm run dev
+
+# Production build
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+npm run test
+
+# Unit tests with coverage
+npx vitest --coverage
+
+# E2E tests (requires dev server running)
+npm run e2e
+
+# Run all tests (CI)
+npm run ci:test
+
+# Storybook
+npm run storybook
+```
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── components/      # Reusable UI components
+├── pages/           # Page-level components
+├── store/           # Redux store, slices, thunks
+├── hooks/           # Custom React hooks
+├── utils/           # Helper functions
+└── stories/         # Storybook stories
+```
+
+---
+
+## 📄 License
+
+MIT
